@@ -173,6 +173,7 @@ The `None` type can be used as the `<to>` parameter (e.g.: `Move(a->None)`) to s
 ## Visualization Limitations
 
 Some features are still being built. As of now, we are limited to:
+- Trying to figure out the method to identify erroroneous move
 - No branching logic
 - No looping
 - No explicit lifetime annotation
