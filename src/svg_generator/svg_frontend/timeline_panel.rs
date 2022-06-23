@@ -43,6 +43,8 @@ struct EventDotData {
     hash: u64,
     dot_x: i64,
     dot_y: i64,
+    cross_x: i64,
+    cross_y: i64,
     valid: bool,
     title: String,
 }
@@ -195,6 +197,10 @@ fn prepare_registry(registry: &mut Handlebars) {
     let dot_template =
         "        {{#if valid}}\
                     <circle cx=\"{{dot_x}}\" cy=\"{{dot_y}}\" r=\"5\" data-hash=\"{{hash}}\" class=\"tooltip-trigger\" data-tooltip-text=\"{{title}}\"/>\n\
+                {{ else }}\
+                    <svg x=\"{{cross_x}}\" y=\"{{cross_y}}\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">
+                        <path d=\"M 1,1 l 9,9 M 10,1 l -9,9\" data-hash=\"{{hash}}\" stroke-width=\"3\" />
+                    </svg> \n\
                  {{/if}}";
     let function_dot_template =    
         "        {{#if valid}}\
@@ -392,6 +398,8 @@ fn render_dots_string(
                         hash: *hash as u64,
                         dot_x: resource_owners_layout[hash].x_val,
                         dot_y: get_y_axis_pos(*line_number),
+                        cross_x: resource_owners_layout[hash].x_val-5,
+                        cross_y: get_y_axis_pos(*line_number)-5,
                         valid: event.check_valid(),
                         // default value if print_message_with_name() fails
                         title: "Unknown Resource Owner Value".to_owned(),
